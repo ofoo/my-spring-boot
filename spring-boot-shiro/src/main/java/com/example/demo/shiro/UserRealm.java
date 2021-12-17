@@ -7,19 +7,19 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+/**
+ * @author  guochao
+ * @date  2021/12/17 8:05
+ * @version 1.0
+ */
 public class UserRealm extends AuthorizingRealm {
-//    授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("principalCollection = 授权" + principalCollection);
         return null;
     }
-//认证
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-
-        System.out.println("authenticationToken = 认证" + authenticationToken);
         return null;
     }
 }
-
