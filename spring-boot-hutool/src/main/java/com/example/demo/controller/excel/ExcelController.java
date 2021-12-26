@@ -5,8 +5,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -314,6 +317,12 @@ public class ExcelController {
         IoUtil.close(out);
 
 
+    }
+
+    @GetMapping("/aa")
+    @ResponseStatus(HttpStatus.OK)
+    public void aa(){
+        System.out.println("我是神");
     }
 
     private void deleteFile(String pathname){

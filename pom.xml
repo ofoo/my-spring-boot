@@ -22,5 +22,6 @@
 		<module>spring-boot-shiro</module>
 		<module>spring-boot-easypoi</module>
 		<module>spring-boot-hutool</module>
+		<module>spring-boot-mvc</module>
 	</modules>
 </project>
