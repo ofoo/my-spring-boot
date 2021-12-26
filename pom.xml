@@ -21,5 +21,6 @@
 		<module>spring-boot-security</module>
 		<module>spring-boot-shiro</module>
 		<module>spring-boot-easypoi</module>
+		<module>spring-boot-hutool</module>
 	</modules>
 </project>
