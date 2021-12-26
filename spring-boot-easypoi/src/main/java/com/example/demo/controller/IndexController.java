@@ -7,11 +7,15 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import com.example.demo.entity.MsgClient;
 import com.example.demo.entity.MsgClientGroup;
 import com.example.demo.entity.StudentEntity;
+import lombok.SneakyThrows;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,19 +28,23 @@ import java.util.List;
 @Controller
 public class IndexController {
     @RequestMapping("/")
-    public String index(){
-//        List<StudentEntity> list = new ArrayList<>();
-//        list.add(new StudentEntity("1","唐嫣",2,new Date(),new Date()));
-//        list.add(new StudentEntity("2","郭碧婷",2,new Date(),new Date()));
-//        list.add(new StudentEntity("3","高圆圆",2,new Date(),new Date()));
-//        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("计算机一班学生","学生"),
-//                StudentEntity.class, list);
+    public String index() throws IOException {
+        List<StudentEntity> list = new ArrayList<>();
+        list.add(new StudentEntity("1","唐嫣",2,new Date(),new Date()));
+        list.add(new StudentEntity("2","郭碧婷",2,new Date(),new Date()));
+        list.add(new StudentEntity("3","高圆圆",2,new Date(),new Date()));
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("计算机一班学生","学生"),
+                StudentEntity.class, list);
+        FileOutputStream fos = new FileOutputStream("G:\\github\\my-spring-boot\\spring-boot-easypoi\\"+System.currentTimeMillis()+".xls");
+        workbook.write(fos);
+        fos.close();
+        workbook.close();
         return "index";
     }
 
     @RequestMapping("/dc")
     public String download(ModelMap map) {
-        List<MsgClient> list = new ArrayList<MsgClient>();
+        List<MsgClient> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             MsgClient client = new MsgClient();
             client.setBirthday(new Date());
@@ -57,6 +65,5 @@ public class IndexController {
         map.put(NormalExcelConstants.PARAMS, params);//参数
         map.put(NormalExcelConstants.FILE_NAME, params);//文件名称
         return NormalExcelConstants.EASYPOI_EXCEL_VIEW;//View名称
-
     }
 }
