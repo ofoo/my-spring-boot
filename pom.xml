@@ -23,5 +23,6 @@
 		<module>spring-boot-easypoi</module>
 		<module>spring-boot-hutool</module>
 		<module>spring-boot-mvc</module>
-	</modules>
+        <module>spring-boot-vue</module>
+    </modules>
 </project>
