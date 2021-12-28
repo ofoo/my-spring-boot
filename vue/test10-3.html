@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>自定义组件的 v-model</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <runoob-input v-model="num"></runoob-input>
+        <p>输入的数字为:{{num}}</p>
+    </div>
+    <script>
+        Vue.component('runoob-input', {
+            template: `
+    <p>   <!-- 包含了名为 input 的事件 -->
+      <input
+       ref="input"
+       :value="value" 
+       @input="$emit('input', $event.target.value)"
+      >
+    </p>
+    `,
+            props: ['value'], // 名为 value 的 prop
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                num: 100,
+            }
+        })
+    </script>
+</body>
+
+</html>
