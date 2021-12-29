@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>美女排名</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{/common/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/common/vue.min.js}"></script>
+    <script th:src="@{/common/axios.min.js}"></script>
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script th:src="@{/common/bootstrap/js/html5shiv.min.js}"></script>
+    <script th:src="@{/common/bootstrap/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container" id="app">
+    <div class="page-header">
+        <h1>美女排名 <small>Subtext for header</small></h1>
+    </div>
+    <a th:href="@{/beauty/save}" class="btn btn-success">添加</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,index) in list">
+            <th scope="row">{{index}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.gender}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script th:src="@{/common/bootstrap/js/jquery.min.js}"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script th:src="@{/common/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            list: []
+        },
+        mounted() {
+            var _this = this;
+            axios
+                .get('/beauty/ajax/list')
+                .then(function (response) {
+                    _this.list = response.data
+                })
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+        }
+    });
+</script>
+</body>
+</html>
