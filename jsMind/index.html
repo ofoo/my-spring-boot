@@ -1,0 +1,60 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>jsMind示例</title>
+    <link type="text/css" rel="stylesheet" href="style/jsmind.css" />
+    <script type="text/javascript" src="js/jsmind.js"></script>
+    <script type="text/javascript" src="js/jsmind.draggable.js"></script>
+</head>
+<body>
+<button onclick="get_root()">获取根节点</button>
+<button onclick="get_node()">获取根节点</button>
+<button onclick="get_selected_node()">获取根节点</button>
+<div id="jsmind_container"></div>
+
+<script type="text/javascript">
+    var options = {                   // options 将在下一章中详细介绍
+        container:'jsmind_container', // [必选] 容器的ID，或者为容器的对象
+        editable:true,                // [可选] 是否启用编辑
+        theme:'orange',                // [可选] 主题
+
+    };
+    var jm = new jsMind(options);
+    jm.show();
+
+    //**获取根节点** : 使用 `jm.get_root()` 即可获取当前思维导图的根节点。
+    function get_root(){
+        // {
+        //     "id":"open",           // [必选] ID, 所有节点的ID不应有重复，否则ID重复的结节将被忽略
+        //     "topic":"Open Source", // [必选] 节点上显示的内容
+        //     "direction":"right",   // [可选] 节点的方向，此数据仅在第一层节点上有效，目前仅支持 left 和 right 两种，默认为 right
+        //     "expanded":true,       // [可选] 该节点是否是展开状态，默认为 true
+        // }
+        var root = jm.get_root();
+        console.log(root);
+    }
+    //**根据 id 查找节点** : 使用 `jm.get_node(nodeid)` 方法即可根据 id 查找当前思维导图中指定的节点，如果查找不到则返回 `null`。
+    function get_node(){
+        var node = jm.get_node("root");
+        console.log(node);
+    }
+    //**获取选中的节点** : 使用 `jm.get_selected_node()` 方法即可获取当前选中的节点，如果没有选中的节点则返回 `null`。
+    function get_selected_node(){
+        var selectedNode = jm.get_selected_node();
+        console.log(selectedNode);
+    }
+    //**查找相邻的节点** : 使用 `jm.find_node_before(node|nodeid)` 和 `find_node_after(node|nodeid)` 即可获取指定的节点的上一个或下一个节点，如果没有上一个或下一个，则返回 `null`。
+    function find_node_before(){
+        console.log(selectedNode);
+    }
+    //**获取父节点** : 使用 `node.parent` 即可获取父节点，根节点的父节点为 `null`。
+    function nodeParent(){
+        console.log(selectedNode);
+    }
+    //**获取子节点集合** : 使用 `node.children` 即可获取子节点的集合。
+    function nodeChildren(){
+        console.log(selectedNode);
+    }
+</script>
+</body>
+</html>
