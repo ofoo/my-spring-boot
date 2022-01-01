@@ -16,11 +16,13 @@ import java.util.List;
 public interface BeautyDao {
     List<BeautyDto> list(BeautyDto beautyDto);
 
-    BeautyDto getById(@Param("id") Long id);
+    BeautyDto getById(Long id);
 
     void delete(Beauty beauty);
 
     void update(Beauty beauty);
 
     void insert(Beauty beauty);
+
+    BeautyDto getByName(String name);
 }

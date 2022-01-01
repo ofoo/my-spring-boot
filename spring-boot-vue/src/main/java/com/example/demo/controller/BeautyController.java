@@ -46,8 +46,7 @@ public class BeautyController {
     @RequestMapping("/beauty/ajax/save")
     @ResponseBody
     public Jr ajaxSave(@RequestBody Beauty beauty) {
-        beautyService.save(beauty);
-        return Jr.yesd(beauty.getId());
+        return beautyService.saveEnhance(beauty);
     }
 
     //删除功能

@@ -1,24 +1,62 @@
 <!doctype html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" th:replace="layout :: layout(~{::title}, ~{::style}, ~{::script}, ~{::body}, 'beauty')"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>女神排名</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" th:href="@{/common/bootstrap/css/bootstrap.min.css}">
-    <link th:href="@{/custom/css/style.css}" rel="stylesheet">
-    <script th:src="@{/common/vue.min.js}"></script>
-    <script th:src="@{/common/axios.min.js}"></script>
-
-    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
-    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
-    <!--[if lt IE 9]>
-    <script th:src="@{/common/bootstrap/js/html5shiv.min.js}"></script>
-    <script th:src="@{/common/bootstrap/js/respond.min.js}"></script>
-    <![endif]-->
+    <style></style>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                pageInfo: {},
+                query: {}
+            },
+            methods: {
+                dataDel: function (id) {
+                    axios.post('/beauty/ajax/delete', {
+                        params: {
+                            id: id
+                        }
+                    })
+                        .then(function (response) {
+                            var res = response.data;
+                            if (res.status) {
+                                location.reload()
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                },
+                queryList: function (pageNum) {
+                    var _this = this;
+                    axios
+                        .post('/beauty/ajax/list', {
+                            pageNum: pageNum,
+                            name: _this.query.name
+                        })
+                        .then(function (response) {
+                            var res = response.data;
+                            if (res.status) {
+                                _this.pageInfo = res.data
+                            }
+                        })
+                        .catch(function (error) { // 请求失败处理
+                            console.log(error);
+                        });
+                },
+                clearQuery:function(){
+                    var _this = this;
+                    _this.query={};
+                    _this.queryList(1);
+                },
+            },
+            mounted() {
+                var _this = this;
+                _this.queryList(1);
+            }
+        });
+    </script>
 </head>
 <body>
 <div class="container" id="app">
@@ -43,6 +81,7 @@
             <th>姓名</th>
             <th>年龄</th>
             <th>性别</th>
+            <th>生日</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -52,6 +91,7 @@
             <td>{{item.name}}</td>
             <td>{{item.age}}</td>
             <td>{{item.gender==2?'女':(item.gender==1?'男':'未知')}}</td>
+            <td>{{item.birthday}}</td>
             <td>
                 <a v-bind:href="'/beauty/save?id='+item.id" class="btn btn-primary btn-xs">编辑</a>
                 <span class="btn btn-danger btn-xs" v-on:click="dataDel(item.id)">删除</span>
@@ -76,65 +116,5 @@
         </ul>
     </nav>
 </div>
-
-<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-<script th:src="@{/common/bootstrap/js/jquery.min.js}"></script>
-<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script th:src="@{/common/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/custom/js/common.js}"></script>
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            pageInfo: {},
-            query: {}
-        },
-        methods: {
-            dataDel: function (id) {
-                axios.post('/beauty/ajax/delete', {
-                    params: {
-                        id: id
-                    }
-                })
-                    .then(function (response) {
-                        var res = response.data;
-                        if (res.status) {
-                            location.reload()
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            },
-            queryList: function (pageNum) {
-                var _this = this;
-                axios
-                    .post('/beauty/ajax/list', {
-                        pageNum: pageNum,
-                        name: _this.query.name
-                    })
-                    .then(function (response) {
-                        var res = response.data;
-                        if (res.status) {
-                            console.log(res.data)
-                            _this.pageInfo = res.data
-                        }
-                    })
-                    .catch(function (error) { // 请求失败处理
-                        console.log(error);
-                    });
-            },
-            clearQuery:function(){
-                var _this = this;
-                _this.query={};
-                _this.queryList(1);
-            },
-        },
-        mounted() {
-            var _this = this;
-            _this.queryList(1);
-        }
-    });
-</script>
 </body>
 </html>

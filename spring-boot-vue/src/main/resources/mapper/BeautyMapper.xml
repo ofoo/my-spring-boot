@@ -32,8 +32,12 @@
                 and `name` like CONCAT('%',#{name},'%')
             </if>
         </where>
+        order by add_time desc
     </select>
     <select id="getById" resultType="com.example.demo.dto.BeautyDto">
         select * from beauty where id=#{id}
+    </select>
+    <select id="getByName" resultType="com.example.demo.dto.BeautyDto">
+        select * from beauty where `name`=#{name}
     </select>
 </mapper>

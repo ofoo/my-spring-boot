@@ -9,3 +9,14 @@ function getQueryVariable(variable) {
     }
     return (false);
 }
+
+$(function(){
+    $(".date").datepicker({
+        language: "zh-CN",
+        autoclose: true,
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        todayBtn: "linked",
+        clearBtn: true,
+    });
+})

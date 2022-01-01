@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.common.Jr;
 import com.example.demo.dao.BeautyDao;
 import com.example.demo.dto.BeautyDto;
 import com.example.demo.entity.Beauty;
@@ -28,6 +29,24 @@ public class BeautyService {
 
     public BeautyDto getById(Long id) {
         return beautyDao.getById(id);
+    }
+
+    public Jr saveEnhance(Beauty beauty) {
+        if (beauty.getId() != null) {
+            BeautyDto byDate = beautyDao.getByName(beauty.getName());
+            if (byDate != null) {
+                if (byDate.getId().longValue() != beauty.getId()) {
+                    return Jr.nom("女神已添加");
+                }
+            }
+        } else {
+            BeautyDto byDate = beautyDao.getByName(beauty.getName());
+            if (byDate != null) {
+                return Jr.nom("女神已添加");
+            }
+        }
+        save(beauty);
+        return Jr.yesd(beauty.getId());
     }
 
     public void save(Beauty beauty) {
