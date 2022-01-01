@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN" th:fragment="layout (title, link, script, body, active)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title th:replace="${title}">标题</title>
+
+    <!-- Bootstrap -->
+    <link href="/common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--BootstrapTable-->
+    <link rel="stylesheet" href="/common/bootstrap/css/bootstrap-table.min.css">
+    <link href="/common/summernote/summernote.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" th:href="@{/common/jsMind/style/jsmind.css}" />
+    <link href="/custom/css/admin-style.css" rel="stylesheet">
+    <link href="/custom/css/style.css" rel="stylesheet">
+    <th:block th:replace="${link}"/>
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="/common/bootstrap/js/html5shiv.min.js"></script>
+    <script src="/common/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="page-container">
+    <th:block th:replace="${body}"></th:block>
+</div>
+
+
+<th:block th:replace="${script}"/>
+</body>
+</html>

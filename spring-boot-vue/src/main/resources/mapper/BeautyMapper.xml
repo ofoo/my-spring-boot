@@ -24,13 +24,16 @@
         where id=#{id}
     </update>
 
-    <select id="list" resultType="com.example.demo.entity.Beauty">
+    <select id="list" resultType="com.example.demo.dto.BeautyDto">
         select * from beauty
         <where>
             del_status=0
+            <if test="name!=null and name!=''">
+                and `name` like CONCAT('%',#{name},'%')
+            </if>
         </where>
     </select>
-    <select id="getById" resultType="com.example.demo.entity.Beauty">
+    <select id="getById" resultType="com.example.demo.dto.BeautyDto">
         select * from beauty where id=#{id}
     </select>
 </mapper>

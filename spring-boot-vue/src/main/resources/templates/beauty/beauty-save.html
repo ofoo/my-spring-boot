@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>添加美女</title>
+    <title></title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" th:href="@{/common/bootstrap/css/bootstrap.min.css}">
@@ -22,10 +22,9 @@
 <body>
 <div class="container" id="app">
     <div class="page-header">
-        <h1>添加美女 <small>Subtext for header</small></h1>
+        <h1><span id="pageName"></span> <small>Subtext for header</small></h1>
     </div>
     <form>
-        <input type="hidden" th:if="${id}" th:value="${id}" id="id">
         <div class="form-group">
             <label for="name">姓名</label>
             <input type="text" v-model="obj.name" class="form-control" id="name" placeholder="姓名">
@@ -42,7 +41,8 @@
                 <option value="2">女</option>
             </select>
         </div>
-        <span v-on:click="dataSave" class="btn btn-primary">添加</span>
+        <span v-on:click="dataSave" class="btn btn-primary" id="saveBtn">添加</span>
+        <span onclick="history.back()" class="btn btn-warning">后退</span>
     </form>
 </div>
 
@@ -50,6 +50,7 @@
 <script th:src="@{/common/bootstrap/js/jquery.min.js}"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script th:src="@{/common/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/custom/js/common.js}"></script>
 <script>
     new Vue({
         el: '#app',
@@ -60,14 +61,13 @@
         },
         methods: {
             dataSave: function () {
-                axios.post('/beauty/ajax/save', {
-                    id: $("#id").val(),        // 参数 firstName
-                    name: $("#name").val(),    // 参数 lastName
-                    age: $("#age").val(),
-                    gender: $("#gender").val()
-                })
+                var _this = this;
+                axios.post('/beauty/ajax/save', _this.obj)
                     .then(function (response) {
-                        console.log(response);
+                        var data = response.data;
+                        if (data.status) {
+                            location.href = "/beauty/list";
+                        }
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -76,17 +76,32 @@
         },
         mounted() {
             var _this = this;
-            var id = $("#id").val();
-            if (id !== undefined) {
+            var id = getQueryVariable("id");
+            var typeName;
+            if (id) {
+                typeName = "修改";
                 axios
-                    .get('/beauty/ajax/getById', {id: id})
+                    .get('/beauty/ajax/getById', {
+                        params: {
+                            id: id
+                        }
+                    })
                     .then(function (response) {
-                        _this.obj = response.data;
+                        var res = response.data;
+                        if (res.status) {
+                            _this.obj = res.data;
+                        }
                     })
                     .catch(function (error) { // 请求失败处理
                         console.log(error);
                     });
+            } else {
+                typeName = "添加";
             }
+            $("#saveBtn").text(typeName);
+            var pageName = typeName + "女神";
+            $("#pageName").text(pageName);
+            document.title = pageName;
         }
     });
 </script>

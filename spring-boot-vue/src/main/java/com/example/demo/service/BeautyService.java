@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.BeautyDao;
+import com.example.demo.dto.BeautyDto;
 import com.example.demo.entity.Beauty;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,11 +20,13 @@ import java.util.List;
 public class BeautyService {
     @Resource
     private BeautyDao beautyDao;
-    public List<Beauty> list() {
-        return beautyDao.list();
+    public PageInfo<BeautyDto> list(BeautyDto query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<BeautyDto> list = beautyDao.list(query);
+        return new PageInfo<>(list);
     }
 
-    public Beauty getById(Long id) {
+    public BeautyDto getById(Long id) {
         return beautyDao.getById(id);
     }
 

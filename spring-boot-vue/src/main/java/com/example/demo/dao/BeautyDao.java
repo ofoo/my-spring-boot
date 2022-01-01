@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.dto.BeautyDto;
 import com.example.demo.entity.Beauty;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,9 +14,9 @@ import java.util.List;
  */
 @Mapper
 public interface BeautyDao {
-    List<Beauty> list();
+    List<BeautyDto> list(BeautyDto beautyDto);
 
-    Beauty getById(@Param("id") Long id);
+    BeautyDto getById(@Param("id") Long id);
 
     void delete(Beauty beauty);
 
