@@ -12,8 +12,6 @@ import java.util.Date;
  * @Version 1.0
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Beauty {
     private Long id;
     //姓名
@@ -23,7 +21,11 @@ public class Beauty {
     //年龄
     private Integer age;
     //性别
-    private String gender;
+    private Integer gender;
     //生日
     private Date birthday;
+    private Date addTime;
+    private Date updateTime;
+    private Date deleteTime;
+    private Integer delStatus;
 }

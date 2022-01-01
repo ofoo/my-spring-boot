@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>美女排名</title>
+    <title>女神排名</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" th:href="@{/common/bootstrap/css/bootstrap.min.css}">
@@ -22,7 +22,7 @@
 <body>
 <div class="container" id="app">
     <div class="page-header">
-        <h1>美女排名 <small>Subtext for header</small></h1>
+        <h1>女神排名 <small>Subtext for header</small></h1>
     </div>
     <a th:href="@{/beauty/save}" class="btn btn-success">添加</a>
     <hr>
@@ -33,14 +33,19 @@
             <th>姓名</th>
             <th>年龄</th>
             <th>性别</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(item,index) in list">
-            <th scope="row">{{index}}</th>
+            <th scope="row">{{index+1}}</th>
             <td>{{item.name}}</td>
             <td>{{item.age}}</td>
             <td>{{item.gender}}</td>
+            <td>
+<!--                <a v-bind:href="'/beauty/ajax/save'+{{item.id}}"  class="btn btn-primary btn-xs">编辑</a>-->
+<!--                <span class="btn btn-danger btn-xs" v-on:click="dataDel({{item.id}})">删除</span>-->
+            </td>
         </tr>
         </tbody>
     </table>
@@ -54,14 +59,28 @@
     new Vue({
         el: '#app',
         data: {
-            list: []
+            list: [],
+        },
+        methods:{
+            dataDel: function(id){
+                axios.post('/beauty/ajax/delete', {
+                    id: id,
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         },
         mounted() {
             var _this = this;
             axios
                 .get('/beauty/ajax/list')
                 .then(function (response) {
-                    _this.list = response.data
+                    console.log(response)
+                    _this.list = response.data.data
                 })
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
