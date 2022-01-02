@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.common.Jr;
+import com.example.demo.common.MyUtils;
 import com.example.demo.dao.BeautyDao;
 import com.example.demo.dto.BeautyDto;
 import com.example.demo.entity.Beauty;
@@ -24,6 +25,9 @@ public class BeautyService {
     public PageInfo<BeautyDto> list(BeautyDto query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
         List<BeautyDto> list = beautyDao.list(query);
+        list.forEach(beautyDto -> {
+            beautyDto.setAge(MyUtils.getAge(beautyDto.getBirthday()));
+        });
         return new PageInfo<>(list);
     }
 

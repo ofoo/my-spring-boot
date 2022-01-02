@@ -9,17 +9,13 @@
             el: '#app',
             data: {
                 obj: {
-                    id: null,
-                    name: null,
-                    photo: null,
-                    age:null,
                     gender: 0,
-                    birthday: null
                 }
             },
             methods: {
                 dataSave: function () {
                     var _this = this;
+                    _this.obj.birthday=$("#birthday").val();
                     axios.post('/beauty/ajax/save', _this.obj)
                         .then(function (response) {
                             var res = response.data;
@@ -50,7 +46,6 @@
                             var res = response.data;
                             if (res.status) {
                                 _this.obj = res.data;
-                                console.log(_this.obj)
                             }
                         })
                         .catch(function (error) { // 请求失败处理
@@ -78,10 +73,6 @@
             <input type="text" v-model="obj.name" class="form-control" id="name" placeholder="姓名">
         </div>
         <div class="form-group">
-            <label for="name">年龄</label>
-            <input type="text" v-model="obj.age" class="form-control" id="age" placeholder="年龄">
-        </div>
-        <div class="form-group">
             <label for="name">性别</label>
             <select v-model="obj.gender" id="gender" class="form-control">
                 <option value="0">未知</option>
@@ -91,7 +82,12 @@
         </div>
         <div class="form-group">
             <label for="name">生日</label>
-            <input type="text" v-model="obj.birthday" class="form-control date" id="birthday" placeholder="生日">
+            <div class="input-group date">
+                <input type="text" v-model="obj.birthday" class="form-control date" id="birthday" placeholder="生日" readonly>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
         </div>
         <span v-on:click="dataSave" class="btn btn-primary" id="saveBtn">添加</span>
         <span onclick="history.back()" class="btn btn-warning">后退</span>

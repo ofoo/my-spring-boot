@@ -54,7 +54,7 @@
             mounted() {
                 var _this = this;
                 _this.queryList(1);
-            }
+            },
         });
     </script>
 </head>
@@ -68,8 +68,8 @@
             <label class="sr-only" for="name">姓名</label>
             <input type="text" class="form-control" id="name" v-model="query.name" placeholder="姓名">
         </div>
-        <span class="btn btn-primary" v-on:click="queryList(1)">查询</span>
-        <span class="btn btn-warning" v-on:click="clearQuery">清空</span>
+        <span class="btn btn-primary" @click="queryList(1)">查询</span>
+        <span class="btn btn-warning" @click="clearQuery">清空</span>
     </form>
     <hr>
     <a th:href="@{/beauty/save}" class="btn btn-success">添加</a>
@@ -86,15 +86,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(item,index) in pageInfo.list">
-            <th scope="row">{{index+1}}</th>
-            <td>{{item.name}}</td>
-            <td>{{item.age}}</td>
-            <td>{{item.gender==2?'女':(item.gender==1?'男':'未知')}}</td>
-            <td>{{item.birthday}}</td>
+        <tr v-for="(item,index) in pageInfo.list" :key="item.id">
+            <th scope="row" v-text="index+1"></th>
+            <td v-text="item.name"></td>
+            <td v-text="item.age"></td>
+            <td v-text="item.gender==2?'女':(item.gender==1?'男':'未知')"></td>
+            <td v-text="item.birthday"></td>
             <td>
-                <a v-bind:href="'/beauty/save?id='+item.id" class="btn btn-primary btn-xs">编辑</a>
-                <span class="btn btn-danger btn-xs" v-on:click="dataDel(item.id)">删除</span>
+                <a :href="'/beauty/save?id='+item.id" class="btn btn-primary btn-xs">编辑</a>
+                <span class="btn btn-danger btn-xs" @click="dataDel(item.id)">删除</span>
             </td>
         </tr>
         </tbody>
@@ -102,14 +102,14 @@
     <nav aria-label="Page navigation">
         <ul class="pagination">
             <li v-if="pageInfo.hasPreviousPage">
-                <span class="fyl-pointer" v-on:click="queryList(pageInfo.prePage)" aria-label="Previous">
+                <span class="fyl-pointer" @click="queryList(pageInfo.prePage)" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </span>
             </li>
-            <li v-bind:class="{'active':pageInfo.pageNum==num}" v-for="num in pageInfo.navigatepageNums"><span
-                    v-on:click="queryList(num)" class="fyl-pointer">{{num}}</span></li>
+            <li :class="{'active':pageInfo.pageNum==num}" v-for="num in pageInfo.navigatepageNums"><span
+                    @click="queryList(num)" class="fyl-pointer" v-text="num"></span></li>
             <li v-if="pageInfo.hasNextPage">
-                <span class="fyl-pointer" v-on:click="queryList(pageInfo.nextPage)" aria-label="Next">
+                <span class="fyl-pointer" @click="queryList(pageInfo.nextPage)" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </span>
             </li>
