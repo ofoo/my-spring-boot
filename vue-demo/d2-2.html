@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.js</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="demo">{{ fullName }}</div>
+
+<script>
+    /*监听属性方式*/
+    // var vm = new Vue({
+    //     el: '#demo',
+    //     data: {
+    //         firstName: 'Foo',
+    //         lastName: 'Bar',
+    //         fullName: 'Foo Bar'
+    //     },
+    //     watch: {
+    //         firstName: function (val) {
+    //             console.log(1)
+    //             this.fullName = val + ' ' + this.lastName
+    //         },
+    //         lastName: function (val) {
+    //             console.log(2)
+    //             this.fullName = this.firstName + ' ' + val
+    //         }
+    //     }
+    // })
+    /*计算属性方式*/
+    var vm = new Vue({
+        el: '#demo',
+        data: {
+            firstName: 'Foo',
+            lastName: 'Bar'
+        },
+        computed: {
+            fullName: function () {
+                return this.firstName + ' ' + this.lastName
+            }
+        }
+    })
+</script>
+</body>
+</html>
