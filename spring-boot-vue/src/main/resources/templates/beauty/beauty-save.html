@@ -9,10 +9,12 @@
             el: '#app',
             data: {
                 obj: {
-                    name:"",
-                    age:"",
+                    id: null,
+                    name: null,
+                    photo: null,
+                    age:null,
                     gender: 0,
-                    birthday: ""
+                    birthday: null
                 }
             },
             methods: {
@@ -48,6 +50,7 @@
                             var res = response.data;
                             if (res.status) {
                                 _this.obj = res.data;
+                                console.log(_this.obj)
                             }
                         })
                         .catch(function (error) { // 请求失败处理
