@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="x-spreadsheet/xspreadsheet.css">
+</head>
+<body onload="load()">
+<div id="x-spreadsheet-demo"></div>
+
+<script src="x-spreadsheet/xspreadsheet.js"></script>
+<script src="x-spreadsheet/locale/zh-cn.js"></script>
+<script>
+    function load() {
+        x_spreadsheet.locale('zh-cn');
+        var xs = x_spreadsheet('#x-spreadsheet-demo', {
+            showToolbar: true,
+            showGrid: true,
+            showBottomBar: true,
+        })
+            .loadData([{name: 'Sheet1', rows: {}}]).change((cdata) => {
+                // console.log(cdata);
+                // console.log(JSON.stringify(xs.getData()))
+                console.log('>>>', xs.getData());
+            });
+    }
+</script>
+</body>
+</html>
