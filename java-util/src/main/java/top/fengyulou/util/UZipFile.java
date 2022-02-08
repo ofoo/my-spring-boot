@@ -8,9 +8,10 @@ import java.util.zip.ZipFile;
 
 /**
  * zip解压工具类
- * @author  guochao
- * @date  2022/2/8 16:33
+ *
+ * @author guochao
  * @version 1.0
+ * @date 2022/2/8 16:33
  */
 public class UZipFile {
     /**
@@ -36,7 +37,6 @@ public class UZipFile {
             String zipEntryName = entry.getName();
             InputStream in = zip.getInputStream(entry);
             String outPath = (descDir + zipEntryName).replaceAll("\\*", "/");
-            ;
             //判断路径是否存在,不存在则创建文件路径
             File file = new File(outPath.substring(0, outPath.lastIndexOf('/')));
             if (!file.exists()) {
