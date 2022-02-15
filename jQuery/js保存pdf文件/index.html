@@ -18,12 +18,14 @@
     <![endif]-->
 </head>
 <body>
-<div class="container-fluid" id="fromHTMLtestdiv">
-    <h1>标题1</h1>
-    <p>内容1</p>
-    <p>
-        <img src="../img/img.jpg" width="300">
-    </p>
+<div class="container-fluid">
+    <div id="fromHTMLtestdiv">
+        <h1>标题1</h1>
+        <p>内容1</p>
+        <p>
+            <img src="../img/img.jpg" width="300">
+        </p>
+    </div>
     <button type="button" class="btn btn-primary" id="btn">下载</button>
 </div>
 
@@ -35,14 +37,15 @@
 <script src="jspdf.debug.js"></script>
 <script src="font.js"></script>
 <script>
-    function a(){
+    function a() {
         var pdf = new jsPDF('p', 'pt', 'a4')
         console.log(pdf.getFontList());
     }
 
-    $("#btn").click(function(){
+    $("#btn").click(function () {
         demoFromHTML()
     })
+
     function demoFromHTML() {
         var pdf = new jsPDF('p', 'pt', 'a4')
 
@@ -56,11 +59,11 @@
 // (class, of compound) at this time.
             , specialElementHandlers = {
             // element with id of "bypass" - jQuery style selector
-            '#bypassme': function(element, renderer){
+            '#bypassme': function (element, renderer) {
                 // true = "handled elsewhere, bypass text extraction"
                 return true
             },
-            '.hide': function(element, renderer){
+            '.hide': function (element, renderer) {
                 // true = "handled elsewhere, bypass text extraction"
                 return true
             }
