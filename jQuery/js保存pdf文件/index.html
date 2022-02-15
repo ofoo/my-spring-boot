@@ -24,34 +24,54 @@
     <p>
         <img src="../img/img.jpg" width="300">
     </p>
-    <button type="button" class="btn btn-primary" onclick="demoFromHTML()">下载</button>
+    <button type="button" class="btn btn-primary" id="btn">下载</button>
 </div>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="../bootstrap/js/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
-<script src="jspdf.min.js"></script>
+<!--<script src="jspdf.min.js"></script>-->
+<script src="jspdf.debug.js"></script>
+<script src="font.js"></script>
 <script>
-    function demoFromHTML() {
-        var pdf = new jsPDF('p', 'pt', '微软雅黑')
+    function a(){
+        var pdf = new jsPDF('p', 'pt', 'a4')
+        console.log(pdf.getFontList());
+    }
 
-            // source can be HTML-formatted string, or a reference
-            // to an actual DOM element from which the text will be scraped.
+    $("#btn").click(function(){
+        demoFromHTML()
+    })
+    function demoFromHTML() {
+        var pdf = new jsPDF('p', 'pt', 'a4')
+
+// source can be HTML-formatted string, or a reference
+// to an actual DOM element from which the text will be scraped.
             , source = $('#fromHTMLtestdiv')[0]
 
-            // we support special element handlers. Register them with jQuery-style
-            // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-            // There is no support for any other type of selectors
-            // (class, of compound) at this time.
+// we support special element handlers. Register them with jQuery-style
+// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+// There is no support for any other type of selectors
+// (class, of compound) at this time.
             , specialElementHandlers = {
-                // element with id of "bypass" - jQuery style selector
-                '#bypassme': function(element, renderer){
-                    // true = "handled elsewhere, bypass text extraction"
-                    return true
-                }
+            // element with id of "bypass" - jQuery style selector
+            '#bypassme': function(element, renderer){
+                // true = "handled elsewhere, bypass text extraction"
+                return true
+            },
+            '.hide': function(element, renderer){
+                // true = "handled elsewhere, bypass text extraction"
+                return true
             }
-
+        }
+        // ===============================  设置字体
+        pdf.addFileToVFS("shnormal.ttf", shnormal);
+        pdf.addFont('shnormal.ttf', 'shnormal', 'normal');
+        pdf.setFont("shnormal");
+        pdf.setFontType("normal");
+        // ===============================
+        // pdf.text("唐嫣", 10, 10);
         margins = {
             top: 80,
             bottom: 60,
