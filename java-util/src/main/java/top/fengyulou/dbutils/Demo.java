@@ -1,0 +1,32 @@
+package top.fengyulou.dbutils;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapHandler;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Map;
+
+/**
+ * @author guochao
+ * @version 1.0
+ * @date 2022/2/23 12:39
+ */
+public class Demo {
+    public static void main(String[] args) {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/bgxt_2021_4");
+        dataSource.setUsername("root");
+        dataSource.setPassword("666666");
+
+        QueryRunner run = new QueryRunner(dataSource);
+        try {
+            Map<String, Object> map = run.query("SELECT * FROM menu WHERE id=?", new MapHandler(), 1);
+            System.out.println(map);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
