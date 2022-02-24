@@ -2,10 +2,14 @@ package top.fengyulou.dbutils;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,10 +27,13 @@ public class Demo {
 
         QueryRunner run = new QueryRunner(dataSource);
         try {
-            Map<String, Object> map = run.query("SELECT * FROM menu WHERE id=?", new MapHandler(), 1);
-            System.out.println(map);
-        } catch (SQLException e) {
-            e.printStackTrace();
+//            Map<String, Object> map = run.query("SELECT * FROM menu WHERE id=?", new MapHandler(), 1);
+//            System.out.println(map);
+f
+            List<Object> show_sdatabsases = run.query("show databases", new ColumnListHandler<String>());
+            System.out.println(show_databases.size());
+        } catch (SQLException e) {sds
+            e.printStackTrace();d
         }
     }
 }
