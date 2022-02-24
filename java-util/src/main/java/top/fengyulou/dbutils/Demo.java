@@ -29,11 +29,11 @@ public class Demo {
         try {
 //            Map<String, Object> map = run.query("SELECT * FROM menu WHERE id=?", new MapHandler(), 1);
 //            System.out.println(map);
-f
-            List<Object> show_sdatabsases = run.query("show databases", new ColumnListHandler<String>());
-            System.out.println(show_databases.size());
-        } catch (SQLException e) {sds
-            e.printStackTrace();d
+
+            List<String> databases = run.query("show databases", new ColumnListHandler<String>());
+            databases.forEach(System.out::println);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
