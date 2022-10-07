@@ -28,15 +28,12 @@
 		<module>spring-boot-mvc</module>
         <module>spring-boot-vue</module>
         <module>java-util</module>
-    </modules>
+		<module>sub-table-spring-boot</module>
+		<module>amaze-ui-spring-boot</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.thymeleaf</groupId>
-				<artifactId>thymeleaf-spring5</artifactId>
-				<version>3.0.13.RELEASE</version>
-			</dependency>
 			<!--MyBatis-->
 			<dependency>
 				<groupId>org.mybatis.spring.boot</groupId>

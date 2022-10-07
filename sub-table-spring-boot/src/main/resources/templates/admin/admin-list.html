@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表</title>
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/lss-admin.css">
+    <link rel="stylesheet" href="/assets/css/lss.css">
+</head>
+<body>
+<div class="lss-admin">
+    <div class="lss-admin-list-left">
+        <ul class="am-list am-list-border">
+            <li><a href="#" class="current"><i class="am-icon-pencil am-icon-fw"></i>链接管理</a></li>
+            <li><a href="#"><i class="am-icon-pencil am-icon-fw"></i>项目管理</a></li>
+            <li><a href="#"><i class="am-icon-pencil am-icon-fw"></i>日志管理</a></li>
+            <li><a href="#"><i class="am-icon-pencil am-icon-fw"></i>报销管理</a></li>
+            <li><a href="#"><i class="am-icon-pencil am-icon-fw"></i>加班管理</a></li>
+        </ul>
+    </div>
+    <div class="lss-admin-list-right">
+        <ol class="am-breadcrumb am-breadcrumb-slash">
+            <li class="am-active">用户管理</li>
+        </ol>
+        <form class="am-form-inline lss-mb30" role="form">
+            <div class="am-form-group">
+                <input type="text" class="am-form-field" placeholder="名称">
+            </div>
+
+            <button type="submit" class="am-btn am-btn-primary">查询</button>
+            <button type="button" class="am-btn am-btn-default">清空</button>
+        </form>
+        <div class="lss-mb20">
+            <a class="am-btn am-btn-primary" href="/admin/save">添加</a>
+            <button class="am-btn am-btn-danger">删除</button>
+        </div>
+        <table class="am-table am-table-bordered">
+            <thead>
+            <tr>
+                <th>网站名称</th>
+                <th>网址</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Amaze UI</td>
+                <td>http://amazeui.org</td>
+                <td>2012-10-01</td>
+                <td>
+                    <a href="/admin/save" class="am-btn am-btn-primary am-btn-xs">修改</a>
+                    <button class="am-btn am-btn-danger am-btn-xs">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Amaze UI</td>
+                <td>http://amazeui.org</td>
+                <td>2012-10-01</td>
+                <td>
+                    <a href="/admin/save" class="am-btn am-btn-primary am-btn-xs">修改</a>
+                    <button class="am-btn am-btn-danger am-btn-xs">删除</button>
+                </td>
+            </tr>
+            <tr class="am-active">
+                <td>Amaze UI(Active)</td>
+                <td>http://amazeui.org</td>
+                <td>2012-10-01</td>
+                <td>
+                    <a href="/admin/save" class="am-btn am-btn-primary am-btn-xs">修改</a>
+                    <button class="am-btn am-btn-danger am-btn-xs">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Amaze UI</td>
+                <td>http://amazeui.org</td>
+                <td>2012-10-01</td>
+                <td>
+                    <a href="/admin/save" class="am-btn am-btn-primary am-btn-xs">修改</a>
+                    <button class="am-btn am-btn-danger am-btn-xs">删除</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Amaze UI</td>
+                <td>http://amazeui.org</td>
+                <td>2012-10-01</td>
+                <td>
+                    <a href="/admin/save" class="am-btn am-btn-primary am-btn-xs">修改</a>
+                    <button class="am-btn am-btn-danger am-btn-xs">删除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <ul class="am-pagination">
+            <li class="am-disabled"><a href="#">&laquo;</a></li>
+            <li class="am-active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
