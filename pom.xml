@@ -30,6 +30,7 @@
         <module>java-util</module>
 		<module>sub-table-spring-boot</module>
 		<module>amaze-ui-spring-boot</module>
+		<module>web-socket</module>
 	</modules>
 
 	<dependencyManagement>
