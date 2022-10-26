@@ -1,0 +1,38 @@
+<html lang="zh-CN" th:replace="admin-layout :: layout('聊天', ~{}, ~{}, ~{}, ~{::body})"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--编写CSS、JS-->
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin: 50px;">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">在线用户</div>
+                <ul class="list-group">
+                    <li class="list-group-item">唐嫣</li>
+                    <li class="list-group-item">吴宣仪</li>
+                    <li class="list-group-item">虞书欣</li>
+                    <li class="list-group-item">韩雪</li>
+                    <li class="list-group-item">李飒飒</li>
+                    <li class="list-group-item">郭碧婷</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">聊天（吴宣仪）</div>
+                <div class="panel-body" style="height: 350px;">
+                    分发而服务
+                </div>
+                <div style="border-top: 1px solid #ddd;"></div>
+                <textarea style="height: 200px;width: 100%;border: none;outline: none;padding: 15px;"></textarea>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
