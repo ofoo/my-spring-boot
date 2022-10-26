@@ -1,34 +1,144 @@
-<html lang="zh-CN" th:replace="admin-layout :: layout('聊天', ~{}, ~{}, ~{}, ~{::body})"
+<html lang="zh-CN" th:replace="admin-layout :: layout('聊天', ~{}, ~{}, ~{::script}, ~{::body})"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <!--编写CSS、JS-->
+    <script>
+        let socket=null;
+        let users={};
+        let messages=[];
+        var chatUser='';
+        let username = $("#username").val();
+        if (username==""){
+            layer.prompt({title:"请输入您的昵称",closeBtn:0,btn: ['确定']},function(value, index, elem){
+                $("#username").val(value);
+                username=value;
+                layer.close(index);
+                wsInit();
+            });
+        }
+        function wsInit() {
+            if (typeof (WebSocket) == "undefined") {
+                console.log("您的浏览器不支持WebSocket");
+            } else {
+                console.log("您的浏览器支持WebSocket");
+                let socketUrl = "ws://localhost:8080/imserver/" + username;
+                if (socket != null) {
+                    socket.close();
+                    socket = null;
+                }
+                // 开启一个websocket服务
+                socket = new WebSocket(socketUrl);
+                //打开事件
+                socket.onopen = function () {
+                    console.log("websocket已打开");
+                };
+                //  浏览器端收消息，获得从服务端发送过来的文本消息
+                socket.onmessage = function (msg) {
+                    console.log("收到数据====" + msg.data)
+                    let data = JSON.parse(msg.data)  // 对收到的json数据进行解析， 类似这样的： {"users": [{"username": "zhang"},{ "username": "admin"}]}
+                    if (data.users) {  // 获取在线人员信息
+                        users = data.users.filter(user => user.username !== username)  // 获取当前连接的所有用户信息，并且排除自身，自己不会出现在自己的聊天列表里
+                        var usersStr="";
+                        $.each(users,function(index,value){
+                            usersStr+='<li class="list-group-item"><span style="cursor:pointer;" onclick="selectUser(\''+value.username+'\')" class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;'+value.username+'</li>'
+                        })
+                        $("#users").html(usersStr);
+                    } else {
+                        // 如果服务器端发送过来的json数据 不包含 users 这个key，那么发送过来的就是聊天文本json数据
+                        //  // {"from": "zhang", "text": "hello"}
+                        if (data.from === chatUser) {
+                            messages.push(data)
+                            // 构建消息内容
+                            createContent(data.from, null, data.text)
+                        }
+                    }
+                };
+                //关闭事件
+                socket.onclose = function () {
+                    console.log("websocket已关闭");
+                };
+                //发生了错误事件
+                socket.onerror = function () {
+                    console.log("websocket发生了错误");
+                }
+            }
+        }
+
+        //选择聊天用户
+        function selectUser(toUser){
+            chatUser=toUser;
+            $("#toUser").text("（"+toUser+"）");
+        }
+
+        //发送聊天
+        function sendChat(){
+            if (!chatUser) {
+                alert("请选择聊天对象")
+                return;
+            }
+            var text = $("#text").val();
+            if (text=='') {
+                alert("请输入聊天内容")
+            } else {
+                if (typeof (WebSocket) == "undefined") {
+                    console.log("您的浏览器不支持WebSocket");
+                } else {
+                    console.log("您的浏览器支持WebSocket");
+                    // 组装待发送的消息 json
+                    // {"from": "zhang", "to": "admin", "text": "聊天文本"}
+                    let message = {from: username, to: chatUser, text: text}
+                    socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
+                    messages.push({user: username, text: text})
+                    // 构建消息内容，本人消息
+                    createContent(null, username, text)
+                    $("#text").val('');
+                }
+            }
+        }
+
+        //创建内容
+        function createContent(remoteUser, nowUser, text){
+            console.log(nowUser);
+            console.log(remoteUser);
+            if(nowUser){
+                $("#content").append('<p class="text-right">'+text+'</p>');
+            }else if (remoteUser){
+                $("#content").append('<p>'+text+'</p>');
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container">
     <div class="row" style="margin: 50px;">
         <div class="col-md-3">
             <div class="panel panel-default">
-                <div class="panel-heading">在线用户</div>
-                <ul class="list-group">
-                    <li class="list-group-item">唐嫣</li>
-                    <li class="list-group-item">吴宣仪</li>
-                    <li class="list-group-item">虞书欣</li>
-                    <li class="list-group-item">韩雪</li>
-                    <li class="list-group-item">李飒飒</li>
-                    <li class="list-group-item">郭碧婷</li>
+                <div class="panel-heading">在线用户<small>（点击图标开始聊天）</small></div>
+                <ul class="list-group" id="users">
+<!--                    <li class="list-group-item">唐嫣</li>-->
+<!--                    <li class="list-group-item">吴宣仪</li>-->
+<!--                    <li class="list-group-item">虞书欣</li>-->
+<!--                    <li class="list-group-item">韩雪</li>-->
+<!--                    <li class="list-group-item">李飒飒</li>-->
+<!--                    <li class="list-group-item">郭碧婷</li>-->
                 </ul>
             </div>
         </div>
         <div class="col-md-9">
             <div class="panel panel-default">
-                <div class="panel-heading">聊天（吴宣仪）</div>
-                <div class="panel-body" style="height: 350px;">
-                    分发而服务
+                <div class="panel-heading">聊天<span id="toUser"></span><input type="text" id="username" class="form-control pull-right" style="margin-top: -7px;width: auto;" placeholder="请输入您的昵称"></div>
+                <div class="panel-body" style="height: 350px;" id="content">
+                    <!--<p>你好美</p>
+                    <p class="text-right">我很你换你哦</p>
+                    <p>你好美</p>
+                    <p class="text-right">我很你换你哦</p>
+                    <p>你好美</p>
+                    <p class="text-right">我很你换你哦</p>-->
                 </div>
                 <div style="border-top: 1px solid #ddd;"></div>
-                <textarea style="height: 200px;width: 100%;border: none;outline: none;padding: 15px;"></textarea>
+                <textarea style="height: 200px;width: 100%;border: none;outline: none;padding: 15px;" id="text"></textarea>
                 <div class="panel-footer">
-                    <button type="button" class="btn btn-success">发送</button>
+                    <button type="button" class="btn btn-success" onclick="sendChat()">发送</button>
                 </div>
             </div>
         </div>
